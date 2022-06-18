@@ -22,6 +22,14 @@ db = SQLAlchemy(app)
 
 jwt = JWTManager(app)
 
+
+# @jwt.user_claims_loader
+# def add_claims_to_jwt(identity):
+#     if identity == 1:
+#         return {'is_admin': True}
+#     return {'is_admin': False}
+
+
 api = Api(app)
 
 api.add_resource(Store, '/store/<string:name>')
