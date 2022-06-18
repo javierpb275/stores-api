@@ -3,4 +3,4 @@ Flask-RESTful
 Flask-JWT
 flask-jwt-extended
 Flask-SQLAlchemy
-PyJWT==1.7.1
+python-dotenv
