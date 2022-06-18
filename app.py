@@ -1,4 +1,4 @@
-from os import environ 
+from os import environ
 from dotenv import load_dotenv
 from flask import Flask
 from flask_restful import Api
@@ -8,7 +8,6 @@ from flask_sqlalchemy import SQLAlchemy
 from resources.user import UserRegister, User, UserLogin
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
-
 
 app = Flask(__name__)
 
@@ -21,7 +20,7 @@ app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET_KEY')
 
 db = SQLAlchemy(app)
 
-jwt = JWTManager(app) 
+jwt = JWTManager(app)
 
 api = Api(app)
 
