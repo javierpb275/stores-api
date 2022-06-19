@@ -9,6 +9,8 @@ from resources.user import UserRegister, User, UserLogin, TokenRefresh
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 
+from blocklist import BLOCKLIST
+
 app = Flask(__name__)
 
 load_dotenv('.env')
@@ -28,6 +30,11 @@ jwt = JWTManager(app)
 #     if identity == 1:
 #         return {'is_admin': True}
 #     return {'is_admin': False}
+
+@jwt.token_in_blocklist_loader
+def check_if_token_in_blocklist(jwt_header, jwt_data):
+    print(jwt_data)
+    return jwt_data['sub'] in BLOCKLIST
 
 @jwt.expired_token_loader
 def expired_token_callback():
@@ -62,7 +69,7 @@ def token_not_fresh_callback(error):
 
 
 @jwt.revoked_token_loader
-def revoked_token_callback():
+def revoked_token_callback(jwt_header, jwt_data):
     return jsonify({
         'description': 'The token has been revoked.',
         'error': 'token_revoked'
