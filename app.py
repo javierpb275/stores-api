@@ -5,7 +5,7 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 
-from resources.user import UserRegister, User, UserLogin, TokenRefresh
+from resources.user import UserRegister, User, UserLogin, TokenRefresh, UserLogout
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 
@@ -34,7 +34,7 @@ jwt = JWTManager(app)
 @jwt.token_in_blocklist_loader
 def check_if_token_in_blocklist(jwt_header, jwt_data):
     print(jwt_data)
-    return jwt_data['sub'] in BLOCKLIST
+    return jwt_data['jti'] in BLOCKLIST
 
 @jwt.expired_token_loader
 def expired_token_callback():
@@ -85,4 +85,5 @@ api.add_resource(ItemList, '/items')
 api.add_resource(UserRegister, '/register')
 api.add_resource(User, '/user/<int:user_id>')
 api.add_resource(UserLogin, '/login')
+api.add_resource(UserLogout, '/logout')
 api.add_resource(TokenRefresh, '/refresh')
